@@ -40,11 +40,12 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # using Clang
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   # using gcc
-  SET(CMAKE_C_COMPILER gcc)
+  SET(CMAKE_C_COMPILER g++)
   set(WARNING "-Wall")
-  set(PUBLIC "-static -static-libgcc")
+  set(PUBLIC "-static -static-libgcc -static-libg++")
   set(IDENTIFIER "-fextended-identifiers --input-charset=utf-8 -finput-charset=utf-8 --exec-charset=utf-8")
   set(MULTITHREAD "-pthread")
+  set(CPPVERSION "-std=c++11")
   set(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} \
     ${WARNING} \
@@ -59,8 +60,8 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 endif()
 
 set (SOURCE
-  src/main.c
-  src/readcsv.c
+  src/main.cpp
+  src/readcsv.cpp
   )
 
 add_executable (${PROJECT_NAME} ${SOURCE})

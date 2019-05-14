@@ -30,7 +30,7 @@ void cb1(void* s, size_t i, void* p) {
     pp[lines - 1].Pclass = atoi((char*)s);
     break;
   case 4:
-    pp[lines - 1].Sex = strcmp(s, "female") == 0 ? 1 : 0;
+    pp[lines - 1].Sex = strcmp((char*)s, "female") == 0 ? 1 : 0;
     break;
   case 5:
     pp[lines - 1].Age = atoi((char*)s);
