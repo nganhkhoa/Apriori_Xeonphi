@@ -15,8 +15,8 @@ enum AGE{ child,adult,old};
 
 enum SEX {male, female};
 
-float min_sup =0.1;
-float min_cof = 0.8;
+float min_sup =0.05;
+float min_cof = 0.5;
 
 int CountDataSet(csv_data_t* csv_data, int rows, bool check_Age, bool check_Sex, bool check_Survived, bool check_Pclass, int age, int sex, int survived, int pclass){
   int count =0;
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
     }
   }  
   for (i=0; i < 5 ; i++) {
-    printf("Pclass: %d ; count: %d \n", Pclass[i], pclass_L1[i]);
+    printf("Pclass: %d ; count: %d ; check: %d \n",i, Pclass[i], pclass_L1[i]);
   }
   
   // feature Sex
@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
     else sex_L1[1] = 1;
   }
   for (i=0; i < 2 ; i++) {
-    printf("Sex: %d ; count: %d \n", Sex[i], sex_L1[i]);
+    printf("Sex: %d ; count: %d ; check: %d \n", i, Sex[i], sex_L1[i]);
   }
 
   // feature survide
@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
   }
 
   for (i=0; i < 2 ; i++) {
-    printf("survived: %d ; count: %d \n", Survived[i], survived_L1[i]);
+    printf("survived: %d ; count: %d ; check: %d \n", i, Survived[i], survived_L1[i]);
   }
 
   cout << "-----------------------------------------------------------------------" << endl;
@@ -485,6 +485,169 @@ int main(int argc, char** argv) {
   for (int i=0; i < sex_pclass_survived.size(); i++)
     cout << "Sex: " << sex_pclass_survived[i].Sex << " Pclass: " << sex_pclass_survived[i].Pclass << " Survived: " << sex_pclass_survived[i].Survived << endl;
   
+
+  cout << "--------------------------------------------------------------" << endl;
+
+  // Tinh L4
+  vector<Age_Sex_Pclass_Survived> age_sex_pclass_survived;
+
+  // feature Age_Sex_Pclass + Age_Sex_Survived
+
+  for (int i=0; i < age_sex_pclass.size(); i++)
+    for (int j=0; j < age_sex_survived.size(); j++)
+      if (age_sex_pclass[i].Age == age_sex_survived[j].Age && age_sex_pclass[i].Sex == age_sex_survived[j].Sex){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, age_sex_survived[j].Survived , age_sex_pclass[i].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_sex_pclass[i].Age;
+          k.Pclass = age_sex_pclass[i].Pclass;
+          k.Sex = age_sex_pclass[i].Sex;
+          k.Survived = age_sex_survived[j].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+  
+  // feature Age_Sex_Pclass +  Age_Pclass_Survived
+
+  for (int i=0; i < age_sex_pclass.size(); i++)
+    for (int j=0; j < age_pclass_survived.size(); j++)
+      if (age_sex_pclass[i].Age == age_pclass_survived[j].Age && age_sex_pclass[i].Pclass == age_pclass_survived[j].Pclass){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, age_pclass_survived[j].Survived , age_sex_pclass[i].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_sex_pclass[i].Age;
+          k.Pclass = age_sex_pclass[i].Pclass;
+          k.Sex = age_sex_pclass[i].Sex;
+          k.Survived = age_pclass_survived[j].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+
+  // feature Age_Sex_Pclass + Sex_Pclass_Survived 
+
+  for (int i=0; i < age_sex_pclass.size(); i++)
+    for (int j=0; j < sex_pclass_survived.size(); j++)
+      if (age_sex_pclass[i].Sex == sex_pclass_survived[j].Sex && age_sex_pclass[i].Pclass == sex_pclass_survived[j].Pclass){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, sex_pclass_survived[j].Survived , age_sex_pclass[i].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_sex_pclass[i].Age;
+          k.Pclass = age_sex_pclass[i].Pclass;
+          k.Sex = age_sex_pclass[i].Sex;
+          k.Survived = sex_pclass_survived[j].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+
+  // feature Age_Sex_Survived + Sex_Pclass_Survived
+
+  for (int i=0; i < age_sex_survived.size(); i++)
+    for (int j=0; j < sex_pclass_survived.size(); j++)
+      if (age_sex_survived[i].Sex == sex_pclass_survived[j].Sex && age_sex_survived[i].Survived == sex_pclass_survived[j].Survived){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_survived[i].Age , age_sex_survived[i].Sex, sex_pclass_survived[j].Survived , sex_pclass_survived[j].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_sex_survived[i].Age;
+          k.Pclass = sex_pclass_survived[j].Pclass;
+          k.Sex = age_sex_survived[i].Sex;
+          k.Survived = sex_pclass_survived[j].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+
+  // feature Age_Sex_Survived + Age_Pclass_Survived
+  for (int i=0; i < age_sex_survived.size(); i++)
+    for (int j=0; j < age_pclass_survived.size(); j++)
+      if (age_sex_survived[i].Age == age_pclass_survived[j].Age && age_sex_survived[i].Survived == age_pclass_survived[j].Survived){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_survived[i].Age , age_sex_survived[i].Sex, age_sex_survived[j].Survived , age_pclass_survived[j].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_sex_survived[i].Age;
+          k.Pclass = age_pclass_survived[j].Pclass;
+          k.Sex = age_sex_survived[i].Sex;
+          k.Survived = age_pclass_survived[j].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+  
+  // feature Age_Pclass_Survived + Sex_Pclass_Surivived
+
+  for (int i=0; i < age_pclass_survived.size(); i++)
+    for (int j=0; j < sex_pclass_survived.size(); j++)
+      if (age_pclass_survived[i].Pclass == sex_pclass_survived[j].Pclass && age_pclass_survived[i].Survived == sex_pclass_survived[j].Survived){
+        
+        int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_pclass_survived[i].Age , sex_pclass_survived[j].Sex, age_pclass_survived[i].Survived , age_pclass_survived[i].Pclass);
+        if (count > 0 && (float) count/rows > min_sup){
+          Age_Sex_Pclass_Survived k;
+          k.Age = age_pclass_survived[i].Age;
+          k.Pclass = age_pclass_survived[i].Pclass;
+          k.Sex = sex_pclass_survived[j].Sex;
+          k.Survived = age_pclass_survived[i].Survived;
+
+          bool ok = true;
+          for (int l=0; l < age_sex_pclass_survived.size(); l++)
+            if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
+              ok =false;
+              break;
+            }
+          if (ok){
+            age_sex_pclass_survived.push_back(k);
+          }
+        }
+      }
+  for (int i=0; i < age_sex_pclass_survived.size(); i++)
+    cout <<"Age: " << age_sex_pclass_survived[i].Age << " Sex: " << age_sex_pclass_survived[i].Sex << " Pclass: " << age_sex_pclass_survived[i].Pclass << " Survived: " << age_sex_pclass_survived[i].Survived << endl;
+
   return 0;
 }
 

@@ -65,4 +65,12 @@ struct Age_Pclass_Survived{
   int Pclass;
   int count;
 };
+struct Age_Sex_Pclass_Survived{
+  int Age;
+  int Survived;
+  int Sex;
+  int Pclass;
+  int count;
+};
+
 void read_csv(char* filename, void* returned_data, int* total_data_count);
