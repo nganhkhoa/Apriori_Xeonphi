@@ -88,8 +88,8 @@ int main(int argc, char** argv) {
   }
   
   // feature Sex
-  if (Sex[0] > 0 && (float)Sex[0]/ rows > min_sup) count_sex_L1 ++;
-  if (Sex[1] > 0 && (float)Sex[1]/ rows > min_sup) count_sex_L1 ++;
+  if (Sex[0] > 0 /*&& (float)Sex[0]/ rows > min_sup*/) count_sex_L1 ++;
+  if (Sex[1] > 0 /*&& (float)Sex[1]/ rows > min_sup*/) count_sex_L1 ++;
   int sex_L1[2]={};
   if (count_sex_L1 == 2){
     sex_L1[0] = 1;
@@ -105,15 +105,15 @@ int main(int argc, char** argv) {
   }
 
   // feature survide
-  if (Survived[0] > 0 && (float)Survived[0]/ rows > min_sup) count_survived_L1 ++;
-  if (Survived[1] > 0 && (float)Survived[1]/ rows > min_sup) count_survived_L1 ++;
+  if (Survived[0] > 0 /*&& (float)Survived[0]/ rows > min_sup*/) count_survived_L1 ++;
+  if (Survived[1] > 0 /*&& (float)Survived[1]/ rows > min_sup*/) count_survived_L1 ++;
   int survived_L1[2]={};
   if (count_survived_L1 == 2){
     survived_L1[0] = 1;
     survived_L1[1] = 1;
   }
   else {
-    if (survived_L1[0] > 0 && ((float)survived_L1[0]/ rows > min_sup))  survived_L1[0] = 1;
+    if (survived_L1[0] > 0 /*&& ((float)survived_L1[0]/ rows > min_sup)*/)  survived_L1[0] = 1;
     else survived_L1[1] = 1;
   }
 
@@ -132,7 +132,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 2; j ++){
         if (sex_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 1, 1, 0, 0, i, j , 0 , 0);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Sex k;
             k.Age = i;
             k.count = count;
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
     cout << "Age_Sex_L2" << endl;
 
     for (int i=0; i < age_sex.size(); i++){
-      cout << "Age: " << age_sex[i].Age << " Sex: " << age_sex[i].Sex  << endl;
+      cout << "Age: " << age_sex[i].Age << " Sex: " << age_sex[i].Sex << "Count: " << age_sex[i].count << endl;
     }
   
   // feature Age_Pclass
@@ -156,7 +156,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 5; j ++){
         if (pclass_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 1, 0, 1, 0, i, 0 , j , 0);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Pclass k;
             k.Age = i;
             k.count = count;
@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
     }
   cout << "Age_Pclass_L2" << endl;
   for (int i=0; i < age_pclass.size(); i++){
-      cout << "Age: " << age_pclass[i].Age << " Pclass: " << age_pclass[i].Pclass << endl;
+      cout << "Age: " << age_pclass[i].Age << " Pclass: " << age_pclass[i].Pclass << "Count: "<< age_pclass[i].count << endl;
     }
 
   // feature Age_Survived
@@ -178,7 +178,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 2; j ++){
         if (survived_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 1, 0, 0, 1, i, 0 , 0 , j);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Survived k;
             k.Age = i;
             k.count = count;
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
 
   cout << "Age_Survived_L2" << endl;
   for (int i=0; i < age_survived.size(); i++){
-      cout << "Age: " << age_survived[i].Age << " Survived: " << age_survived[i].Survived  << endl;
+      cout << "Age: " << age_survived[i].Age << " Survived: " << age_survived[i].Survived << "Count: " << age_survived[i].count << endl;
     }
 
   // feature Sex_Pclass
@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 5; j ++){
         if (pclass_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 0, 1, 0, 1, 0, i , 0 , j);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Sex_Pclass k;
             k.Sex = i;
             k.count = count;
@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
 
   cout << "Sex_Pclass_L2" << endl;
   for (int i=0; i < sex_pclass.size(); i++){
-      cout << "Sex: " << sex_pclass[i].Sex << " Pclass: " << sex_pclass[i].Pclass << endl;
+      cout << "Sex: " << sex_pclass[i].Sex << " Pclass: " << sex_pclass[i].Pclass << "Count: " << sex_pclass[i].count << endl;
     }
 
   // feature Sex_Survived
@@ -225,7 +225,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 2; j ++){
         if (survived_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 0, 1, 1, 0, 0, i , j , 0);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Sex_Survived k;
             k.Sex = i;
             k.count = count;
@@ -238,7 +238,7 @@ int main(int argc, char** argv) {
 
   cout << "Sex_Survived_L2" << endl;
   for (int i=0; i < sex_survived.size(); i++){
-      cout << "Sex: " << sex_survived[i].Sex << " Survived: " << sex_survived[i].Survived  << endl;
+      cout << "Sex: " << sex_survived[i].Sex << " Survived: " << sex_survived[i].Survived  << "Count: " << sex_survived[i].count<< endl;
     }
   
   // feature Pclass_Survived
@@ -249,7 +249,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < 2; j ++){
         if (survived_L1[j] ==1){
           int count = CountDataSet(csv_data,rows, 0, 0, 1, 1, 0, 0 , j , i);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Pclass_Survived k;
             k.Pclass = i;
             k.count = count;
@@ -262,7 +262,7 @@ int main(int argc, char** argv) {
 
   cout << "Pclass_Survived_L2" << endl;
   for (int i=0; i < pclass_survived.size(); i++){
-      cout << "Pclass: " << pclass_survived[i].Pclass << " Survived: " << pclass_survived[i].Survived  << endl;
+      cout << "Pclass: " << pclass_survived[i].Pclass << " Survived: " << pclass_survived[i].Survived << "Count: " << pclass_survived[i].count << endl;
     }
 
   cout << "--------------------------------------------------------------" << endl;
@@ -278,7 +278,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < age_pclass.size(); j ++){
         if (age_sex[i].Age == age_pclass[j].Age){
           int count = CountDataSet(csv_data,rows,  1, 1, 0, 1, age_sex[i].Age, age_sex[i].Sex , 0 , age_pclass[j].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Sex_Pclass k;
             k.Age = age_sex[i].Age;
             k.Sex = age_sex[i].Sex;
@@ -302,7 +302,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < sex_pclass.size(); j ++){
         if (age_sex[i].Sex == sex_pclass[j].Sex){
           int count = CountDataSet(csv_data,rows,  1, 1, 0, 1, age_sex[i].Age, age_sex[i].Sex , 0 , sex_pclass[j].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Sex_Pclass k;
             k.Age = age_sex[i].Age;
             k.Sex = age_sex[i].Sex;
@@ -327,7 +327,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < age_survived.size(); j ++){
         if (age_sex[i].Age == age_survived[j].Age){
           int count = CountDataSet(csv_data,rows,  1, 1, 1, 0, age_sex[i].Age, age_sex[i].Sex , age_survived[j].Survived , 0);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Sex_Survived k;
             k.Age = age_sex[i].Age;
             k.Sex = age_sex[i].Sex;
@@ -352,7 +352,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < sex_survived.size(); j ++){
         if (age_sex[i].Sex == sex_survived[j].Sex){
           int count = CountDataSet(csv_data,rows,  1, 1, 1, 0, age_sex[i].Age, age_sex[i].Sex , sex_survived[j].Survived , 0);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Sex_Survived k;
             k.Age = age_sex[i].Age;
             k.Sex = age_sex[i].Sex;
@@ -376,7 +376,7 @@ int main(int argc, char** argv) {
   for (int i=0; i < age_sex.size(); i++){
       for (int j=0; j < pclass_survived.size(); j ++){
           int count = CountDataSet(csv_data,rows,  1, 0, 1, 1, age_sex[i].Age, 0 , pclass_survived[j].Survived , pclass_survived[j].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Pclass_Survived k;
             k.Age = age_sex[i].Age;
             k.Pclass = pclass_survived[j].Pclass;
@@ -400,7 +400,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < pclass_survived.size(); j ++)
           if (age_pclass[i].Pclass == pclass_survived[j].Pclass){
           int count = CountDataSet(csv_data,rows,  1, 0, 1, 1, age_pclass[i].Age, 0 , pclass_survived[j].Survived , pclass_survived[j].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Pclass_Survived k;
             k.Age = age_pclass[i].Age;
             k.Pclass = pclass_survived[j].Pclass;
@@ -423,7 +423,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < age_survived.size(); j ++)
           if (age_pclass[i].Pclass == age_survived[j].Age){
           int count = CountDataSet(csv_data,rows,  1, 0, 1, 1, age_pclass[i].Age, 0 , age_survived[j].Survived , age_pclass[i].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Age_Pclass_Survived k;
             k.Age = age_pclass[i].Age;
             k.Pclass = age_pclass[j].Pclass;
@@ -448,7 +448,7 @@ int main(int argc, char** argv) {
       for (int j=0; j < pclass_survived.size(); j ++)
           if (sex_survived[i].Survived == pclass_survived[j].Survived){
           int count = CountDataSet(csv_data,rows,  0, 1, 1, 1, 0, sex_survived[i].Sex , sex_survived[j].Survived , pclass_survived[i].Pclass);
-          if (count > 0 && (float) count / rows > min_sup){
+          if (count > 0 /*&& (float) count / rows > min_sup*/){
             Sex_Pclass_Survived k;
             k.Sex = sex_survived[i].Sex;
             k.Pclass = pclass_survived[j].Pclass;
@@ -468,22 +468,22 @@ int main(int argc, char** argv) {
 
   cout << "Age_Sex_Pclass" << endl;
   for (int i=0; i < age_sex_pclass.size(); i++)
-    cout << "Age: " << age_sex_pclass[i].Age << " Sex: " << age_sex_pclass[i].Sex << " Pclass: " << age_sex_pclass[i].Pclass << endl;
+    cout << "Age: " << age_sex_pclass[i].Age << " Sex: " << age_sex_pclass[i].Sex << " Pclass: " << age_sex_pclass[i].Pclass << "Count: " << age_sex_pclass[i].count<< endl;
   
   cout << "Age_Sex_Survived" << endl;
   
   for (int i=0; i < age_sex_survived.size(); i++)
-    cout << "Age: " << age_sex_survived[i].Age << " Sex: " << age_sex_survived[i].Sex << " Survived: " << age_sex_survived[i].Survived << endl;
+    cout << "Age: " << age_sex_survived[i].Age << " Sex: " << age_sex_survived[i].Sex << " Survived: " << age_sex_survived[i].Survived << "Count: " << age_sex_survived[i].count << endl;
 
   cout << "Age_Pclass_Survived" << endl;
   
   for (int i=0; i < age_pclass_survived.size(); i++)
-    cout << "Age: " << age_pclass_survived[i].Age << " Pclass: " << age_pclass_survived[i].Pclass << " Survived: " << age_pclass_survived[i].Survived << endl;
+    cout << "Age: " << age_pclass_survived[i].Age << " Pclass: " << age_pclass_survived[i].Pclass << " Survived: " << age_pclass_survived[i].Survived  << "Count: " << age_pclass_survived[i].count<< endl;
 
   cout << "Sex_Pclass_Survived" << endl;
 
   for (int i=0; i < sex_pclass_survived.size(); i++)
-    cout << "Sex: " << sex_pclass_survived[i].Sex << " Pclass: " << sex_pclass_survived[i].Pclass << " Survived: " << sex_pclass_survived[i].Survived << endl;
+    cout << "Sex: " << sex_pclass_survived[i].Sex << " Pclass: " << sex_pclass_survived[i].Pclass << " Survived: " << sex_pclass_survived[i].Survived << "Count: " << sex_pclass_survived[i].count<< endl;
   
 
   cout << "--------------------------------------------------------------" << endl;
@@ -498,13 +498,13 @@ int main(int argc, char** argv) {
       if (age_sex_pclass[i].Age == age_sex_survived[j].Age && age_sex_pclass[i].Sex == age_sex_survived[j].Sex){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, age_sex_survived[j].Survived , age_sex_pclass[i].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_sex_pclass[i].Age;
           k.Pclass = age_sex_pclass[i].Pclass;
           k.Sex = age_sex_pclass[i].Sex;
           k.Survived = age_sex_survived[j].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -524,13 +524,13 @@ int main(int argc, char** argv) {
       if (age_sex_pclass[i].Age == age_pclass_survived[j].Age && age_sex_pclass[i].Pclass == age_pclass_survived[j].Pclass){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, age_pclass_survived[j].Survived , age_sex_pclass[i].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_sex_pclass[i].Age;
           k.Pclass = age_sex_pclass[i].Pclass;
           k.Sex = age_sex_pclass[i].Sex;
           k.Survived = age_pclass_survived[j].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -550,13 +550,13 @@ int main(int argc, char** argv) {
       if (age_sex_pclass[i].Sex == sex_pclass_survived[j].Sex && age_sex_pclass[i].Pclass == sex_pclass_survived[j].Pclass){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_pclass[i].Age , age_sex_pclass[i].Sex, sex_pclass_survived[j].Survived , age_sex_pclass[i].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_sex_pclass[i].Age;
           k.Pclass = age_sex_pclass[i].Pclass;
           k.Sex = age_sex_pclass[i].Sex;
           k.Survived = sex_pclass_survived[j].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -576,13 +576,13 @@ int main(int argc, char** argv) {
       if (age_sex_survived[i].Sex == sex_pclass_survived[j].Sex && age_sex_survived[i].Survived == sex_pclass_survived[j].Survived){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_survived[i].Age , age_sex_survived[i].Sex, sex_pclass_survived[j].Survived , sex_pclass_survived[j].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_sex_survived[i].Age;
           k.Pclass = sex_pclass_survived[j].Pclass;
           k.Sex = age_sex_survived[i].Sex;
           k.Survived = sex_pclass_survived[j].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -601,13 +601,13 @@ int main(int argc, char** argv) {
       if (age_sex_survived[i].Age == age_pclass_survived[j].Age && age_sex_survived[i].Survived == age_pclass_survived[j].Survived){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_sex_survived[i].Age , age_sex_survived[i].Sex, age_sex_survived[j].Survived , age_pclass_survived[j].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_sex_survived[i].Age;
           k.Pclass = age_pclass_survived[j].Pclass;
           k.Sex = age_sex_survived[i].Sex;
           k.Survived = age_pclass_survived[j].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -627,13 +627,13 @@ int main(int argc, char** argv) {
       if (age_pclass_survived[i].Pclass == sex_pclass_survived[j].Pclass && age_pclass_survived[i].Survived == sex_pclass_survived[j].Survived){
         
         int count = CountDataSet(csv_data,rows,  1, 1, 1, 1, age_pclass_survived[i].Age , sex_pclass_survived[j].Sex, age_pclass_survived[i].Survived , age_pclass_survived[i].Pclass);
-        if (count > 0 && (float) count/rows > min_sup){
+        if (count > 0 /*&& (float) count/rows > min_sup*/){
           Age_Sex_Pclass_Survived k;
           k.Age = age_pclass_survived[i].Age;
           k.Pclass = age_pclass_survived[i].Pclass;
           k.Sex = sex_pclass_survived[j].Sex;
           k.Survived = age_pclass_survived[i].Survived;
-
+          k.count = count;
           bool ok = true;
           for (int l=0; l < age_sex_pclass_survived.size(); l++)
             if (age_sex_pclass_survived[l].Age == k.Age && age_sex_pclass_survived[l].Pclass == k.Pclass && age_sex_pclass_survived[l].Sex == k.Sex && age_sex_pclass_survived[l].Survived == k.Survived){
@@ -646,7 +646,7 @@ int main(int argc, char** argv) {
         }
       }
   for (int i=0; i < age_sex_pclass_survived.size(); i++)
-    cout <<"Age: " << age_sex_pclass_survived[i].Age << " Sex: " << age_sex_pclass_survived[i].Sex << " Pclass: " << age_sex_pclass_survived[i].Pclass << " Survived: " << age_sex_pclass_survived[i].Survived << endl;
+    cout <<"Age: " << age_sex_pclass_survived[i].Age << " Sex: " << age_sex_pclass_survived[i].Sex << " Pclass: " << age_sex_pclass_survived[i].Pclass << " Survived: " << age_sex_pclass_survived[i].Survived << "Count: "<< age_sex_pclass_survived[i].count<< endl;
 
   return 0;
 }
