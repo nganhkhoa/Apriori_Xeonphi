@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+// #include <math.h>
 #include <string.h>
 #include <errno.h>
 
@@ -10,6 +10,8 @@
 #include <set>
 #include <string>
 #include <map>
+#include <limits>
+#include <cmath>
 
 #include <omp.h>
 #include <libcsv/csv.h>
@@ -23,6 +25,9 @@ using std::pair;
 using std::set;
 using std::string;
 using std::vector;
+using std::fabs;
+
+const auto EPSILON = std::numeric_limits<double>::epsilon();
 
 vector <vector<int>> Generate(int count){
   vector<int> s;
@@ -240,11 +245,11 @@ int main(int argc, char** argv) {
   vector<vector<int>> tohop = Generate(selected_fields.size());
 
 #ifdef DEBUGGING
-  for (size_t i=0; i < tohop.size(); i++){
-    for (size_t j=0; j < tohop[i].size(); j++)
-      cout << tohop[i][j] << " ";
-    cout << endl;
-  }
+  // for (size_t i=0; i < tohop.size(); i++){
+  //   for (size_t j=0; j < tohop[i].size(); j++)
+  //     cout << tohop[i][j] << " ";
+  //   cout << endl;
+  // }
 #endif
 
   const table* lastL = allL.back();
@@ -296,8 +301,8 @@ int main(int argc, char** argv) {
         cout << it->first << "-" << it->second << ";";
       }
       cout << " -> ";
-      printf("%f / %f = %f", row->support, support, confidence);
-      cout << " => " << ((confidence < min_confidence) ? "no" : "yes") << endl;
+      printf("%f / %f = %f > %f", row->support, support, confidence, min_confidence);
+      cout << " => " << ((confidence > min_confidence) ? "yes" : "no") << endl;
 
       supportItemSet.clear();
       toBeSupportItemSet.clear();
