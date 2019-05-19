@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <ctime>
+// #include <ctime>
+#include <chrono>
 
 #include <iterator>
 #include <vector>
@@ -30,22 +31,30 @@ using std::vector;
 
 const auto EPSILON = std::numeric_limits<double>::epsilon();
 
-clock_t start;
+namespace {
+using namespace std::chrono;
+
+steady_clock::time_point start;
+
 void start_timer(string message = "") {
   printf("=========== Process start ==========\n");
   if (message.size() != 0) {
     printf("%s\n", message.c_str());
   }
-  start = clock();
+  start = steady_clock::now();
 }
 
 void end_timer() {
+  steady_clock::time_point end = steady_clock::now();
+  seconds total_time_s = duration_cast<seconds>(end - start);
+  milliseconds total_time_ms = duration_cast<milliseconds>(end - start);
+
   printf("=========== Process end ============\n");
-  clock_t total_time = clock() - start;
-  printf(
-      "It took %ld click | %f seconds\n", total_time,
-      (float)total_time / CLOCKS_PER_SEC);
+  std::cout << "It took " << total_time_s.count() << "s";
+  std::cout << " | " << total_time_ms.count() << "ms";
+  std::cout << std::endl;
 }
+} // namespace
 
 // generate binary string based on count
 // to create support item set
@@ -158,19 +167,20 @@ vector<setFrequency_t>* create_table(
 
 int count_itemSet(
     vector<record_t>& records, feature& itemSet, map<string, int>& field_idx) {
-#ifdef DEBUGGING
-  int tid = omp_get_thread_num();
-  printf("thread %d is doing counting\n", tid);
-#endif
   int result = 0;
 
-  for (auto record = records.begin(); record < records.end(); record++) {
+#pragma omp parallel for default(none) \
+    shared(records, itemSet, field_idx) \
+    reduction(+ : result)
+  for (size_t record_id = 0; record_id < records.size(); record_id++) {
+    auto record = records[record_id];
     bool isItemSet = true;
     for (auto it = itemSet.begin(); it != itemSet.end(); it++) {
       int idx = field_idx[it->first];
-      if ((*record)[idx] != it->second)
+      if (record[idx] != it->second)
         isItemSet = false;
     }
+
     if (isItemSet)
       result++;
   }
@@ -258,8 +268,8 @@ int main(int argc, char** argv) {
 
     allL.push_back(L);
 
-// find support for table
-#pragma omp parallel for default(none) shared(L, records, field_idx)
+    // find support for table
+    // #pragma omp parallel default(none) shared(L, records, field_idx)
     for (auto row = L->begin(); row < L->end(); row++) {
       row->support = count_itemSet(records, row->itemSet, field_idx);
     }
