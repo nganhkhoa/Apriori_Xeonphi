@@ -13,7 +13,10 @@
 #include <limits>
 #include <cmath>
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
+
 #include <libcsv/csv.h>
 
 #include "csv_data.h"
@@ -56,6 +59,7 @@ vector <vector<int>> Generate(int count){
   while (true);
   return result;
 }
+
 vector<setFrequency_t>* create_table( vector<setFrequency_t>* L, map<string, set<string>>* classifications,size_t itemTake) {
   auto newL = new vector<setFrequency_t>();
   if (!L) {
@@ -130,12 +134,35 @@ vector<setFrequency_t>* create_table( vector<setFrequency_t>* L, map<string, set
   return newL;
 }
 
+int count_itemSet(vector<record_t>& records, feature& itemSet, map<string,int>& field_idx) {
+  #ifdef DEBUGGING
+  int tid = omp_get_thread_num();
+  printf("thread %d is doing counting\n", tid);
+  #endif
+  int result = 0;
+  for (auto record = records.begin(); record != records.end(); record++) {
+    bool isItemSet = true;
+    for (auto it = itemSet.begin(); it != itemSet.end(); it++) {
+      int idx = field_idx[it->first];
+      if ((*record)[idx] != it->second)
+        isItemSet = false;
+    }
+    if (isItemSet)
+      result++;
+  }
+  return result;
+}
+
 int main(int argc, char** argv) {
   if (argc < 5) {
     printf(
         "./apriori titanic_train.csv <min_support> <min_confidence> <field_1> <field_2>...\n");
     return 0;
   }
+
+  #ifdef _OPENMP
+  omp_set_num_threads(4);
+  #endif
 
   float min_support = atof(argv[2]);
   float min_confidence = atof(argv[3]);
@@ -205,17 +232,9 @@ int main(int argc, char** argv) {
 
     // find support for table
     // TODO: parallel by each row in L / each item set
-    for (auto row = L->begin(); row != L->end(); row++) {
-      for (auto record = records.begin(); record != records.end(); record++) {
-        bool isItemSet = true;
-        for (auto it = row->itemSet.begin(); it != row->itemSet.end(); it++) {
-          int idx = field_idx[it->first];
-          if ((*record)[idx] != it->second)
-            isItemSet = false;
-        }
-        if (isItemSet)
-          row->support++;
-      }
+    #pragma omp parallel for default(none) shared(L, records, field_idx)
+    for (auto row = L->begin(); row < L->end(); row++) {
+      row->support = count_itemSet(records, row->itemSet, field_idx);
     }
 
 #ifdef DEBUGGING
@@ -256,12 +275,17 @@ int main(int argc, char** argv) {
   map<string, string> supportItemSet;
   map<string, string> toBeSupportItemSet;
 
+  // print result
   for (auto row = lastL->begin(); row != lastL->end(); row++) {
     cout << "row:\t";
     for (auto it = row->itemSet.begin(); it != row->itemSet.end(); it++) {
       cout << it->first << "-" << it->second << ";";
     }
     cout << row->support << endl;
+  }
+  cout << "===============================" << endl;
+
+  for (auto row = lastL->begin(); row != lastL->end(); row++) {
     for (size_t i=0; i < tohop.size(); i++) {
       for (size_t j=0; j < tohop[i].size(); j++) {
         const string& field = selected_fields[j];
