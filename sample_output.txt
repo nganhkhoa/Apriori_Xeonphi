@@ -1,0 +1,37 @@
+Read data file Titanic_Scale.csv
+Done read file, total 1344512 transactions
+=========== Process start ==========
+=========== Process end ============
+It took 173954845 click | 173.954849 seconds
+===============================
+row:	Age-Aldult;PClass-3rd;Sex-male;Survived-0;167936
+row:	Age-Child;PClass-3rd;Sex-male;Survived-0;283648
+===============================
+Age-Aldult;PClass-3rd;Sex-male; -> Survived-0; -> 167936.000000 / 193536.000000 = 0.867725 > 0.700000 => yes
+Age-Aldult;PClass-3rd;Survived-0; -> Sex-male; -> 167936.000000 / 209920.000000 = 0.800000 > 0.700000 => yes
+Age-Aldult;PClass-3rd; -> Sex-male;Survived-0; -> 167936.000000 / 268288.000000 = 0.625954 > 0.700000 => no
+PClass-3rd;Sex-male;Survived-0; -> Age-Aldult; -> 167936.000000 / 451584.000000 = 0.371882 > 0.700000 => no
+PClass-3rd;Sex-male; -> Age-Aldult;Survived-0; -> 167936.000000 / 510976.000000 = 0.328657 > 0.700000 => no
+PClass-3rd;Survived-0; -> Age-Aldult;Sex-male; -> 167936.000000 / 586752.000000 = 0.286213 > 0.700000 => no
+PClass-3rd; -> Age-Aldult;Sex-male;Survived-0; -> 167936.000000 / 728064.000000 = 0.230661 > 0.700000 => no
+Age-Aldult;Sex-male;Survived-0; -> PClass-3rd; -> 167936.000000 / 358400.000000 = 0.468571 > 0.700000 => no
+Age-Aldult;Sex-male; -> PClass-3rd;Survived-0; -> 167936.000000 / 432128.000000 = 0.388626 > 0.700000 => no
+Age-Aldult;Survived-0; -> PClass-3rd;Sex-male; -> 167936.000000 / 414720.000000 = 0.404938 > 0.700000 => no
+Age-Aldult; -> PClass-3rd;Sex-male;Survived-0; -> 167936.000000 / 675840.000000 = 0.248485 > 0.700000 => no
+Sex-male;Survived-0; -> Age-Aldult;PClass-3rd; -> 167936.000000 / 726016.000000 = 0.231312 > 0.700000 => no
+Sex-male; -> Age-Aldult;PClass-3rd;Survived-0; -> 167936.000000 / 871424.000000 = 0.192714 > 0.700000 => no
+Survived-0; -> Age-Aldult;PClass-3rd;Sex-male; -> 167936.000000 / 883712.000000 = 0.190035 > 0.700000 => no
+Age-Child;PClass-3rd;Sex-male; -> Survived-0; -> 283648.000000 / 317440.000000 = 0.893548 > 0.700000 => yes
+Age-Child;PClass-3rd;Survived-0; -> Sex-male; -> 283648.000000 / 376832.000000 = 0.752717 > 0.700000 => yes
+Age-Child;PClass-3rd; -> Sex-male;Survived-0; -> 283648.000000 / 459776.000000 = 0.616927 > 0.700000 => no
+PClass-3rd;Sex-male;Survived-0; -> Age-Child; -> 283648.000000 / 451584.000000 = 0.628118 > 0.700000 => no
+PClass-3rd;Sex-male; -> Age-Child;Survived-0; -> 283648.000000 / 510976.000000 = 0.555110 > 0.700000 => no
+PClass-3rd;Survived-0; -> Age-Child;Sex-male; -> 283648.000000 / 586752.000000 = 0.483421 > 0.700000 => no
+PClass-3rd; -> Age-Child;Sex-male;Survived-0; -> 283648.000000 / 728064.000000 = 0.389592 > 0.700000 => no
+Age-Child;Sex-male;Survived-0; -> PClass-3rd; -> 283648.000000 / 367616.000000 = 0.771588 > 0.700000 => yes
+Age-Child;Sex-male; -> PClass-3rd;Survived-0; -> 283648.000000 / 439296.000000 = 0.645688 > 0.700000 => no
+Age-Child;Survived-0; -> PClass-3rd;Sex-male; -> 283648.000000 / 468992.000000 = 0.604803 > 0.700000 => no
+Age-Child; -> PClass-3rd;Sex-male;Survived-0; -> 283648.000000 / 668672.000000 = 0.424196 > 0.700000 => no
+Sex-male;Survived-0; -> Age-Child;PClass-3rd; -> 283648.000000 / 726016.000000 = 0.390691 > 0.700000 => no
+Sex-male; -> Age-Child;PClass-3rd;Survived-0; -> 283648.000000 / 871424.000000 = 0.325499 > 0.700000 => no
+Survived-0; -> Age-Child;PClass-3rd;Sex-male; -> 283648.000000 / 883712.000000 = 0.320973 > 0.700000 => no

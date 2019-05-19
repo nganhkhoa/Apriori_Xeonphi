@@ -26,9 +26,9 @@ int BUFLEN = 2048;
 
 void cb1(void* s, size_t i, void* p) {
 #ifdef DEBUGGING
-  if (put_comma)
-    printf(",");
-  printf("%s", (char*)s);
+  // if (put_comma)
+  //   printf(",");
+  // printf("%s", (char*)s);
 #endif
 
   csv_parser_args* args = (csv_parser_args*)p;
@@ -61,7 +61,7 @@ void cb1(void* s, size_t i, void* p) {
 
 void cb2(int c, void* p) {
 #ifdef DEBUGGING
-  printf("\nline %d: ", lines);
+  // printf("\nline %d: ", lines);
 #endif
 
   new_line = 1;

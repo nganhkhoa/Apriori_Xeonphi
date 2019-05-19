@@ -1,17 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-// #include <math.h>
-#include <string.h>
-#include <errno.h>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <ctime>
 
 #include <iterator>
-#include <iostream>
 #include <vector>
 #include <set>
-#include <string>
 #include <map>
 #include <limits>
-#include <cmath>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -23,44 +21,68 @@
 
 using std::cout;
 using std::endl;
+using std::fabs;
 using std::map;
 using std::pair;
 using std::set;
 using std::string;
 using std::vector;
-using std::fabs;
 
 const auto EPSILON = std::numeric_limits<double>::epsilon();
 
-vector <vector<int>> Generate(int count){
+clock_t start;
+void start_timer(string message = "") {
+  printf("=========== Process start ==========\n");
+  if (message.size() != 0) {
+    printf("%s\n", message.c_str());
+  }
+  start = clock();
+}
+
+void end_timer() {
+  printf("=========== Process end ============\n");
+  clock_t total_time = clock() - start;
+  printf(
+      "It took %ld click | %f seconds\n", total_time,
+      (float)total_time / CLOCKS_PER_SEC);
+}
+
+// generate binary string based on count
+// to create support item set
+vector<vector<int>> generate_combinations(int count) {
   vector<int> s;
   vector<vector<int>> result;
-  for (int i=0; i < count; i++) s.push_back(0);
+  for (int i = 0; i < count; i++)
+    s.push_back(0);
   do {
-    int j = count-1;
-    while ( j >= 0)
-    if (s[j]==1) {
+    int j = count - 1;
+    while (j >= 0)
+      if (s[j] == 1) {
         j--;
-    }
-    else break;
-    
-    s[j]=1;
-    for (int k= j+1; k < count;  k++)
-      s[k] =0;
+      } else
+        break;
+
+    s[j] = 1;
+    for (int k = j + 1; k < count; k++)
+      s[k] = 0;
     bool ok = true;
-    for (int i=0; i < count; i++)
-      if (s[i]==0) {
+    for (int i = 0; i < count; i++)
+      if (s[i] == 0) {
         ok = false;
         break;
       }
-    if (ok) break;
-    else result.push_back(s);
-  }
-  while (true);
+    if (ok)
+      break;
+    else
+      result.push_back(s);
+  } while (true);
   return result;
 }
 
-vector<setFrequency_t>* create_table( vector<setFrequency_t>* L, map<string, set<string>>* classifications,size_t itemTake) {
+// create table of features base on previous table
+vector<setFrequency_t>* create_table(
+    vector<setFrequency_t>* L, map<string, set<string>>* classifications,
+    size_t itemTake) {
   auto newL = new vector<setFrequency_t>();
   if (!L) {
     // first table init
@@ -134,13 +156,15 @@ vector<setFrequency_t>* create_table( vector<setFrequency_t>* L, map<string, set
   return newL;
 }
 
-int count_itemSet(vector<record_t>& records, feature& itemSet, map<string,int>& field_idx) {
-  #ifdef DEBUGGING
+int count_itemSet(
+    vector<record_t>& records, feature& itemSet, map<string, int>& field_idx) {
+#ifdef DEBUGGING
   int tid = omp_get_thread_num();
   printf("thread %d is doing counting\n", tid);
-  #endif
+#endif
   int result = 0;
-  for (auto record = records.begin(); record != records.end(); record++) {
+
+  for (auto record = records.begin(); record < records.end(); record++) {
     bool isItemSet = true;
     for (auto it = itemSet.begin(); it != itemSet.end(); it++) {
       int idx = field_idx[it->first];
@@ -155,14 +179,17 @@ int count_itemSet(vector<record_t>& records, feature& itemSet, map<string,int>& 
 
 int main(int argc, char** argv) {
   if (argc < 5) {
-    printf(
-        "./apriori titanic_train.csv <min_support> <min_confidence> <field_1> <field_2>...\n");
+    printf("./apriori titanic_train.csv <min_support> <min_confidence> "
+           "<field_1> <field_2>...\n");
     return 0;
   }
 
-  #ifdef _OPENMP
-  omp_set_num_threads(4);
-  #endif
+#pragma omp parallel
+  {
+    if (omp_get_thread_num() == 0)
+      printf("Running with %d threads\n", omp_get_num_threads());
+  }
+  // omp_set_num_threads(4);
 
   float min_support = atof(argv[2]);
   float min_confidence = atof(argv[3]);
@@ -223,6 +250,7 @@ int main(int argc, char** argv) {
   table* L = NULL;
   vector<table*> allL;
   int count = 1;
+  start_timer();
   do { // at least one time
     L = create_table(L, &classifications, count);
     if (!L || L->size() == 0)
@@ -230,9 +258,8 @@ int main(int argc, char** argv) {
 
     allL.push_back(L);
 
-    // find support for table
-    // TODO: parallel by each row in L / each item set
-    #pragma omp parallel for default(none) shared(L, records, field_idx)
+// find support for table
+#pragma omp parallel for default(none) shared(L, records, field_idx)
     for (auto row = L->begin(); row < L->end(); row++) {
       row->support = count_itemSet(records, row->itemSet, field_idx);
     }
@@ -259,23 +286,16 @@ int main(int argc, char** argv) {
 
     count++;
   } while (true);
+  end_timer();
 
   // process all L
-  vector<vector<int>> tohop = Generate(selected_fields.size());
-
-#ifdef DEBUGGING
-  // for (size_t i=0; i < tohop.size(); i++){
-  //   for (size_t j=0; j < tohop[i].size(); j++)
-  //     cout << tohop[i][j] << " ";
-  //   cout << endl;
-  // }
-#endif
-
+  vector<vector<int>> tohop = generate_combinations(selected_fields.size());
   const table* lastL = allL.back();
   map<string, string> supportItemSet;
   map<string, string> toBeSupportItemSet;
 
   // print result
+  cout << "===============================" << endl;
   for (auto row = lastL->begin(); row != lastL->end(); row++) {
     cout << "row:\t";
     for (auto it = row->itemSet.begin(); it != row->itemSet.end(); it++) {
@@ -285,20 +305,16 @@ int main(int argc, char** argv) {
   }
   cout << "===============================" << endl;
 
+  // finding confidence and show result
   for (auto row = lastL->begin(); row != lastL->end(); row++) {
-    for (size_t i=0; i < tohop.size(); i++) {
-      for (size_t j=0; j < tohop[i].size(); j++) {
+    for (size_t i = 0; i < tohop.size(); i++) {
+      for (size_t j = 0; j < tohop[i].size(); j++) {
         const string& field = selected_fields[j];
         const string& value = row->itemSet.at(field);
         if (tohop[i][j] != 0) {
-          toBeSupportItemSet.insert(pair<string, string>(
-            field, value
-          ));
-        }
-        else {
-          supportItemSet.insert(pair<string, string>(
-            field, value
-          ));
+          toBeSupportItemSet.insert(pair<string, string>(field, value));
+        } else {
+          supportItemSet.insert(pair<string, string>(field, value));
         }
       }
       int supportItemCount = supportItemSet.size();
@@ -313,7 +329,7 @@ int main(int argc, char** argv) {
         }
 
       if (support == 0)
-        cout << "Co quan gi do sai roi" << endl;
+        cout << "Something is wrong" << endl;
       else
         confidence = row->support / support;
 
@@ -321,11 +337,15 @@ int main(int argc, char** argv) {
         cout << it->first << "-" << it->second << ";";
       }
       cout << " -> ";
-      for (auto it = toBeSupportItemSet.begin(); it != toBeSupportItemSet.end(); it++) {
+      for (auto it = toBeSupportItemSet.begin(); it != toBeSupportItemSet.end();
+           it++) {
         cout << it->first << "-" << it->second << ";";
       }
       cout << " -> ";
-      printf("%f / %f = %f > %f", row->support, support, confidence, min_confidence);
+      printf(
+          "%f / %f = %f > %f", row->support, support, confidence,
+          min_confidence);
+      // TODO: float compare
       cout << " => " << ((confidence > min_confidence) ? "yes" : "no") << endl;
 
       supportItemSet.clear();
@@ -333,6 +353,7 @@ int main(int argc, char** argv) {
     }
   }
 
+  // delete tables
   for (auto it = allL.begin(); it != allL.end(); it++)
     delete *it;
 

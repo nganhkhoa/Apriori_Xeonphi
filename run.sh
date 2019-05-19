@@ -1,2 +1,1 @@
-#!/bin/sh
-./apriori_debug titanic_train.csv $1 Survived Pclass Sex Age
+env OMP_NUM_THREADS=$1 ./apriori Titanic_Scale.csv $2 $3 PClass Age Sex Survived
