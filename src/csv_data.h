@@ -1,76 +1,22 @@
-struct csv_data_t {
-  int Pclass;
-  int Sex;
-  int Age;
-  int Survived;
-};
-struct Age_Sex{
-  int Age;
-  int Sex;
-  int count;
+#include <vector>
+#include <set>
+#include <functional>
+#include <string>
+#include <map>
+
+typedef std::map<std::string, std::string> feature;
+
+struct setFrequency_t {
+  // std::set<std::string> itemSet;
+  feature itemSet;
+  double support = 0;
 };
 
-struct Age_Pclass{
-  int Pclass;
-  int Age;
-  int count;
-};
+typedef std::vector<std::string> record_t;
+typedef std::vector<setFrequency_t> table;
 
-struct Age_Survived{
-  int Age;
-  int Survived;
-  int count;
-};
 
-struct Sex_Pclass{
-  int Sex;
-  int Pclass;
-  int count;
-};
+void read_csv(
+    char* filename, std::vector<record_t>* records,
+    std::vector<char*> selected_fields);
 
-struct Sex_Survived{
-  int Sex;
-  int Survived;
-  int count;
-};
-struct Pclass_Survived{
-  int Pclass;
-  int Survived;
-  int count;
-};
-
-struct Age_Sex_Survived{
-  int Age;
-  int Sex;
-  int Survived;
-  int count;
-};
-struct Age_Sex_Pclass{
-  int Age;
-  int Sex;
-  int Pclass;
-  int count;
-};
-
-struct Sex_Pclass_Survived{
-  int Sex;
-  int Survived;
-  int Pclass;
-  int count;
-};
-
-struct Age_Pclass_Survived{
-  int Age;
-  int Survived;
-  int Pclass;
-  int count;
-};
-struct Age_Sex_Pclass_Survived{
-  int Age;
-  int Survived;
-  int Sex;
-  int Pclass;
-  int count;
-};
-
-void read_csv(char* filename, void* returned_data, int* total_data_count);
