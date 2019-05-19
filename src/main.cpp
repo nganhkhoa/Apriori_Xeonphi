@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
     cout << "Age_Sex_L2" << endl;
 
     for (int i=0; i < age_sex.size(); i++){
-      cout << "Age: " << age_sex[i].Age << " Sex: " << age_sex[i].Sex << "Count: " << age_sex[i].count << endl;
+      cout << "Age: " << age_sex[i].Age << " Sex: " << age_sex[i].Sex << " Count: " << age_sex[i].count << endl;
     }
   
   // feature Age_Pclass
@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
     }
   cout << "Age_Pclass_L2" << endl;
   for (int i=0; i < age_pclass.size(); i++){
-      cout << "Age: " << age_pclass[i].Age << " Pclass: " << age_pclass[i].Pclass << "Count: "<< age_pclass[i].count << endl;
+      cout << "Age: " << age_pclass[i].Age << " Pclass: " << age_pclass[i].Pclass << " Count: "<< age_pclass[i].count << endl;
     }
 
   // feature Age_Survived
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
 
   cout << "Age_Survived_L2" << endl;
   for (int i=0; i < age_survived.size(); i++){
-      cout << "Age: " << age_survived[i].Age << " Survived: " << age_survived[i].Survived << "Count: " << age_survived[i].count << endl;
+      cout << "Age: " << age_survived[i].Age << " Survived: " << age_survived[i].Survived << " Count: " << age_survived[i].count << endl;
     }
 
   // feature Sex_Pclass
@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
 
   cout << "Sex_Pclass_L2" << endl;
   for (int i=0; i < sex_pclass.size(); i++){
-      cout << "Sex: " << sex_pclass[i].Sex << " Pclass: " << sex_pclass[i].Pclass << "Count: " << sex_pclass[i].count << endl;
+      cout << "Sex: " << sex_pclass[i].Sex << " Pclass: " << sex_pclass[i].Pclass << " Count: " << sex_pclass[i].count << endl;
     }
 
   // feature Sex_Survived
@@ -238,7 +238,7 @@ int main(int argc, char** argv) {
 
   cout << "Sex_Survived_L2" << endl;
   for (int i=0; i < sex_survived.size(); i++){
-      cout << "Sex: " << sex_survived[i].Sex << " Survived: " << sex_survived[i].Survived  << "Count: " << sex_survived[i].count<< endl;
+      cout << "Sex: " << sex_survived[i].Sex << " Survived: " << sex_survived[i].Survived  << " Count: " << sex_survived[i].count<< endl;
     }
   
   // feature Pclass_Survived
@@ -262,7 +262,7 @@ int main(int argc, char** argv) {
 
   cout << "Pclass_Survived_L2" << endl;
   for (int i=0; i < pclass_survived.size(); i++){
-      cout << "Pclass: " << pclass_survived[i].Pclass << " Survived: " << pclass_survived[i].Survived << "Count: " << pclass_survived[i].count << endl;
+      cout << "Pclass: " << pclass_survived[i].Pclass << " Survived: " << pclass_survived[i].Survived << " Count: " << pclass_survived[i].count << endl;
     }
 
   cout << "--------------------------------------------------------------" << endl;
@@ -468,22 +468,22 @@ int main(int argc, char** argv) {
 
   cout << "Age_Sex_Pclass" << endl;
   for (int i=0; i < age_sex_pclass.size(); i++)
-    cout << "Age: " << age_sex_pclass[i].Age << " Sex: " << age_sex_pclass[i].Sex << " Pclass: " << age_sex_pclass[i].Pclass << "Count: " << age_sex_pclass[i].count<< endl;
+    cout << "Age: " << age_sex_pclass[i].Age << " Sex: " << age_sex_pclass[i].Sex << " Pclass: " << age_sex_pclass[i].Pclass << " Count: " << age_sex_pclass[i].count<< endl;
   
   cout << "Age_Sex_Survived" << endl;
   
   for (int i=0; i < age_sex_survived.size(); i++)
-    cout << "Age: " << age_sex_survived[i].Age << " Sex: " << age_sex_survived[i].Sex << " Survived: " << age_sex_survived[i].Survived << "Count: " << age_sex_survived[i].count << endl;
+    cout << "Age: " << age_sex_survived[i].Age << " Sex: " << age_sex_survived[i].Sex << " Survived: " << age_sex_survived[i].Survived << " Count: " << age_sex_survived[i].count << endl;
 
   cout << "Age_Pclass_Survived" << endl;
   
   for (int i=0; i < age_pclass_survived.size(); i++)
-    cout << "Age: " << age_pclass_survived[i].Age << " Pclass: " << age_pclass_survived[i].Pclass << " Survived: " << age_pclass_survived[i].Survived  << "Count: " << age_pclass_survived[i].count<< endl;
+    cout << "Age: " << age_pclass_survived[i].Age << " Pclass: " << age_pclass_survived[i].Pclass << " Survived: " << age_pclass_survived[i].Survived  << " Count: " << age_pclass_survived[i].count<< endl;
 
   cout << "Sex_Pclass_Survived" << endl;
 
   for (int i=0; i < sex_pclass_survived.size(); i++)
-    cout << "Sex: " << sex_pclass_survived[i].Sex << " Pclass: " << sex_pclass_survived[i].Pclass << " Survived: " << sex_pclass_survived[i].Survived << "Count: " << sex_pclass_survived[i].count<< endl;
+    cout << "Sex: " << sex_pclass_survived[i].Sex << " Pclass: " << sex_pclass_survived[i].Pclass << " Survived: " << sex_pclass_survived[i].Survived << " Count: " << sex_pclass_survived[i].count<< endl;
   
 
   cout << "--------------------------------------------------------------" << endl;
@@ -646,7 +646,7 @@ int main(int argc, char** argv) {
         }
       }
   for (int i=0; i < age_sex_pclass_survived.size(); i++)
-    cout <<"Age: " << age_sex_pclass_survived[i].Age << " Sex: " << age_sex_pclass_survived[i].Sex << " Pclass: " << age_sex_pclass_survived[i].Pclass << " Survived: " << age_sex_pclass_survived[i].Survived << "Count: "<< age_sex_pclass_survived[i].count<< endl;
+    cout <<"Age: " << age_sex_pclass_survived[i].Age << " Sex: " << age_sex_pclass_survived[i].Sex << " Pclass: " << age_sex_pclass_survived[i].Pclass << " Survived: " << age_sex_pclass_survived[i].Survived << " Count: "<< age_sex_pclass_survived[i].count<< endl;
 
   return 0;
 }
