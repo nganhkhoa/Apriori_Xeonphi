@@ -24,9 +24,34 @@ using std::set;
 using std::string;
 using std::vector;
 
-vector<setFrequency_t>* create_table(
-    vector<setFrequency_t>* L, map<string, set<string>>* classifications,
-    size_t itemTake) {
+vector <vector<int>> Generate(int count){
+  vector<int> s;
+  vector<vector<int>> result;
+  for (int i=0; i < count; i++) s.push_back(0);
+  do {
+    int j = count-1;
+    while ( j >= 0)
+    if (s[j]==1) {
+        j--;
+    }
+    else break;
+    
+    s[j]=1;
+    for (int k= j+1; k < count;  k++)
+      s[k] =0;
+    bool ok = true;
+    for (int i=0; i < count; i++)
+      if (s[i]==0) {
+        ok = false;
+        break;
+      }
+    if (ok) break;
+    else result.push_back(s);
+  }
+  while (true);
+  return result;
+}
+vector<setFrequency_t>* create_table( vector<setFrequency_t>* L, map<string, set<string>>* classifications,size_t itemTake) {
   auto newL = new vector<setFrequency_t>();
   if (!L) {
     // first table init
@@ -42,7 +67,7 @@ vector<setFrequency_t>* create_table(
   }
 
   if (L->size() <= 1) {
-    delete L;
+    // delete L;
     return newL;
   }
 
@@ -96,22 +121,23 @@ vector<setFrequency_t>* create_table(
         break;
     }
   }
-  delete L;
+  // delete L;
   return newL;
 }
 
 int main(int argc, char** argv) {
-  if (argc < 4) {
+  if (argc < 5) {
     printf(
-        "./apriori titanic_train.csv <min_support> <field_1> <field_2>...\n");
+        "./apriori titanic_train.csv <min_support> <min_confidence> <field_1> <field_2>...\n");
     return 0;
   }
 
   float min_support = atof(argv[2]);
+  float min_confidence = atof(argv[3]);
   vector<record_t> records;
   vector<char*> selected_fields;
 
-  for (int i = 3; i < argc; i++)
+  for (int i = 4; i < argc; i++)
     selected_fields.push_back(argv[i]);
 
   map<string, set<string>> classifications;
@@ -162,16 +188,15 @@ int main(int argc, char** argv) {
   }
 #endif
 
-  vector<setFrequency_t>* L = NULL;
-  vector<setFrequency_t> L1;
+  table* L = NULL;
+  vector<table*> allL;
   int count = 1;
   do { // at least one time
     L = create_table(L, &classifications, count);
     if (!L || L->size() == 0)
       break;
 
-    if (count == 1)
-      L1 = *L;
+    allL.push_back(L);
 
     // find support for table
     // TODO: parallel by each row in L / each item set
@@ -211,12 +236,76 @@ int main(int argc, char** argv) {
     count++;
   } while (true);
 
-  // note, because L is overwritten every loop
-  // so if you decide to keep an L, create a copy of it before end of loop
-  // for example L1
+  // process all L
+  vector<vector<int>> tohop = Generate(selected_fields.size());
 
-  if (L)
-    delete L;
+#ifdef DEBUGGING
+  for (size_t i=0; i < tohop.size(); i++){
+    for (size_t j=0; j < tohop[i].size(); j++)
+      cout << tohop[i][j] << " ";
+    cout << endl;
+  }
+#endif
+
+  const table* lastL = allL.back();
+  map<string, string> supportItemSet;
+  map<string, string> toBeSupportItemSet;
+
+  for (auto row = lastL->begin(); row != lastL->end(); row++) {
+    cout << "row:\t";
+    for (auto it = row->itemSet.begin(); it != row->itemSet.end(); it++) {
+      cout << it->first << "-" << it->second << ";";
+    }
+    cout << row->support << endl;
+    for (size_t i=0; i < tohop.size(); i++) {
+      for (size_t j=0; j < tohop[i].size(); j++) {
+        const string& field = selected_fields[j];
+        const string& value = row->itemSet.at(field);
+        if (tohop[i][j] != 0) {
+          toBeSupportItemSet.insert(pair<string, string>(
+            field, value
+          ));
+        }
+        else {
+          supportItemSet.insert(pair<string, string>(
+            field, value
+          ));
+        }
+      }
+      int supportItemCount = supportItemSet.size();
+      const table* supportTable = allL[supportItemCount - 1];
+
+      double support = 0.0;
+      double confidence = 0.0;
+
+      for (auto it = supportTable->begin(); it != supportTable->end(); it++)
+        if (it->itemSet == supportItemSet) {
+          support = it->support;
+        }
+
+      if (support == 0)
+        cout << "Co quan gi do sai roi" << endl;
+      else
+        confidence = row->support / support;
+
+      for (auto it = supportItemSet.begin(); it != supportItemSet.end(); it++) {
+        cout << it->first << "-" << it->second << ";";
+      }
+      cout << " -> ";
+      for (auto it = toBeSupportItemSet.begin(); it != toBeSupportItemSet.end(); it++) {
+        cout << it->first << "-" << it->second << ";";
+      }
+      cout << " -> ";
+      printf("%f / %f = %f", row->support, support, confidence);
+      cout << " => " << ((confidence < min_confidence) ? "no" : "yes") << endl;
+
+      supportItemSet.clear();
+      toBeSupportItemSet.clear();
+    }
+  }
+
+  for (auto it = allL.begin(); it != allL.end(); it++)
+    delete *it;
 
   return 0;
 }

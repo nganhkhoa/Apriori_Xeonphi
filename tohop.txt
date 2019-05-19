@@ -1,0 +1,146 @@
+Age: 0 ; count: 290 ; check: 1 
+Age: 1 ; count: 527 ; check: 1 
+Age: 2 ; count: 74 ; check: 1 
+Pclass: 0 ; count: 0 ; check: 0 
+Pclass: 1 ; count: 216 ; check: 1 
+Pclass: 2 ; count: 184 ; check: 1 
+Pclass: 3 ; count: 491 ; check: 1 
+Pclass: 4 ; count: 0 ; check: 0 
+Sex: 0 ; count: 577 ; check: 1 
+Sex: 1 ; count: 314 ; check: 1 
+survived: 0 ; count: 549 ; check: 1 
+survived: 1 ; count: 342 ; check: 1 
+-----------------------------------------------------------------------
+Age_Sex_L2
+Age: 0 Sex: 0 Count: 182
+Age: 0 Sex: 1 Count: 108
+Age: 1 Sex: 0 Count: 343
+Age: 1 Sex: 1 Count: 184
+Age: 2 Sex: 0 Count: 52
+Age: 2 Sex: 1 Count: 22
+Age_Pclass_L2
+Age: 0 Pclass: 1 Count: 113
+Age: 1 Pclass: 1 Count: 202
+Age: 2 Pclass: 1 Count: 27
+Age_Survived_L2
+Age: 0 Survived: 1 Count: 42
+Age: 1 Survived: 1 Count: 130
+Age: 2 Survived: 1 Count: 44
+Sex_Pclass_L2
+Sex: 0 Pclass: 1 Count: 122
+Sex: 0 Pclass: 2 Count: 108
+Sex: 0 Pclass: 3 Count: 347
+Sex: 1 Pclass: 1 Count: 94
+Sex: 1 Pclass: 2 Count: 76
+Sex: 1 Pclass: 3 Count: 144
+Sex_Survived_L2
+Sex: 0 Survived: 0 Count: 468
+Sex: 0 Survived: 1 Count: 109
+Sex: 1 Survived: 0 Count: 81
+Sex: 1 Survived: 1 Count: 233
+Pclass_Survived_L2
+Pclass: 1 Survived: 0 Count: 80
+Pclass: 1 Survived: 1 Count: 136
+Pclass: 2 Survived: 0 Count: 97
+Pclass: 2 Survived: 1 Count: 87
+Pclass: 3 Survived: 0 Count: 372
+Pclass: 3 Survived: 1 Count: 119
+--------------------------------------------------------------
+Age_Sex_Pclass
+Age: 0 Sex: 0 Pclass: 1 Count: 25
+Age: 0 Sex: 1 Pclass: 1 Count: 17
+Age: 1 Sex: 0 Pclass: 1 Count: 68
+Age: 1 Sex: 1 Pclass: 1 Count: 62
+Age: 2 Sex: 0 Pclass: 1 Count: 29
+Age: 2 Sex: 1 Pclass: 1 Count: 15
+Age: 0 Sex: 0 Pclass: 2 Count: 20
+Age: 0 Sex: 0 Pclass: 3 Count: 137
+Age: 0 Sex: 1 Pclass: 2 Count: 14
+Age: 0 Sex: 1 Pclass: 3 Count: 77
+Age: 1 Sex: 0 Pclass: 2 Count: 75
+Age: 1 Sex: 0 Pclass: 3 Count: 200
+Age: 1 Sex: 1 Pclass: 2 Count: 56
+Age: 1 Sex: 1 Pclass: 3 Count: 66
+Age: 2 Sex: 0 Pclass: 2 Count: 13
+Age: 2 Sex: 0 Pclass: 3 Count: 10
+Age: 2 Sex: 1 Pclass: 2 Count: 6
+Age: 2 Sex: 1 Pclass: 3 Count: 1
+Age_Sex_Survived
+Age: 0 Sex: 0 Survived: 1 Count: 39
+Age: 0 Sex: 1 Survived: 1 Count: 74
+Age: 1 Sex: 0 Survived: 1 Count: 63
+Age: 1 Sex: 1 Survived: 1 Count: 139
+Age: 2 Sex: 0 Survived: 1 Count: 7
+Age: 2 Sex: 1 Survived: 1 Count: 20
+Age: 0 Sex: 0 Survived: 0 Count: 143
+Age: 0 Sex: 1 Survived: 0 Count: 34
+Age: 1 Sex: 0 Survived: 0 Count: 280
+Age: 1 Sex: 1 Survived: 0 Count: 45
+Age: 2 Sex: 0 Survived: 0 Count: 45
+Age: 2 Sex: 1 Survived: 0 Count: 2
+Age_Pclass_Survived
+Age: 0 Pclass: 1 Survived: 0 Count: 17
+Age: 0 Pclass: 1 Survived: 1 Count: 25
+Age: 0 Pclass: 2 Survived: 0 Count: 9
+Age: 0 Pclass: 2 Survived: 1 Count: 25
+Age: 0 Pclass: 3 Survived: 0 Count: 151
+Age: 0 Pclass: 3 Survived: 1 Count: 63
+Age: 1 Pclass: 1 Survived: 0 Count: 39
+Age: 1 Pclass: 1 Survived: 1 Count: 91
+Age: 1 Pclass: 2 Survived: 0 Count: 75
+Age: 1 Pclass: 2 Survived: 1 Count: 56
+Age: 1 Pclass: 3 Survived: 0 Count: 211
+Age: 1 Pclass: 3 Survived: 1 Count: 55
+Age: 2 Pclass: 1 Survived: 0 Count: 24
+Age: 2 Pclass: 1 Survived: 1 Count: 20
+Age: 2 Pclass: 2 Survived: 0 Count: 13
+Age: 2 Pclass: 2 Survived: 1 Count: 6
+Age: 2 Pclass: 3 Survived: 0 Count: 10
+Age: 2 Pclass: 3 Survived: 1 Count: 1
+Sex_Pclass_Survived
+Sex: 0 Pclass: 1 Survived: 0 Count: 77
+Sex: 0 Pclass: 2 Survived: 0 Count: 77
+Sex: 0 Pclass: 1 Survived: 1 Count: 45
+Sex: 0 Pclass: 2 Survived: 1 Count: 45
+Sex: 0 Pclass: 3 Survived: 1 Count: 77
+Sex: 1 Pclass: 1 Survived: 0 Count: 6
+Sex: 1 Pclass: 2 Survived: 0 Count: 6
+Sex: 1 Pclass: 1 Survived: 1 Count: 70
+Sex: 1 Pclass: 2 Survived: 1 Count: 70
+Sex: 1 Pclass: 3 Survived: 1 Count: 6
+--------------------------------------------------------------
+Age: 0 Sex: 0 Pclass: 1 Survived: 1 Count: 9
+Age: 0 Sex: 0 Pclass: 1 Survived: 0 Count: 16
+Age: 0 Sex: 1 Pclass: 1 Survived: 1 Count: 16
+Age: 0 Sex: 1 Pclass: 1 Survived: 0 Count: 1
+Age: 1 Sex: 0 Pclass: 1 Survived: 1 Count: 30
+Age: 1 Sex: 0 Pclass: 1 Survived: 0 Count: 38
+Age: 1 Sex: 1 Pclass: 1 Survived: 1 Count: 61
+Age: 1 Sex: 1 Pclass: 1 Survived: 0 Count: 1
+Age: 2 Sex: 0 Pclass: 1 Survived: 1 Count: 6
+Age: 2 Sex: 0 Pclass: 1 Survived: 0 Count: 23
+Age: 2 Sex: 1 Pclass: 1 Survived: 1 Count: 14
+Age: 2 Sex: 1 Pclass: 1 Survived: 0 Count: 1
+Age: 0 Sex: 0 Pclass: 2 Survived: 1 Count: 11
+Age: 0 Sex: 0 Pclass: 2 Survived: 0 Count: 9
+Age: 0 Sex: 0 Pclass: 3 Survived: 1 Count: 19
+Age: 0 Sex: 0 Pclass: 3 Survived: 0 Count: 118
+Age: 0 Sex: 1 Pclass: 2 Survived: 1 Count: 14
+Age: 0 Sex: 1 Pclass: 3 Survived: 1 Count: 44
+Age: 0 Sex: 1 Pclass: 3 Survived: 0 Count: 33
+Age: 1 Sex: 0 Pclass: 2 Survived: 1 Count: 5
+Age: 1 Sex: 0 Pclass: 2 Survived: 0 Count: 70
+Age: 1 Sex: 0 Pclass: 3 Survived: 1 Count: 28
+Age: 1 Sex: 0 Pclass: 3 Survived: 0 Count: 172
+Age: 1 Sex: 1 Pclass: 2 Survived: 1 Count: 51
+Age: 1 Sex: 1 Pclass: 2 Survived: 0 Count: 5
+Age: 1 Sex: 1 Pclass: 3 Survived: 1 Count: 27
+Age: 1 Sex: 1 Pclass: 3 Survived: 0 Count: 39
+Age: 2 Sex: 0 Pclass: 2 Survived: 1 Count: 1
+Age: 2 Sex: 0 Pclass: 2 Survived: 0 Count: 12
+Age: 2 Sex: 0 Pclass: 3 Survived: 0 Count: 10
+Age: 2 Sex: 1 Pclass: 2 Survived: 1 Count: 5
+Age: 2 Sex: 1 Pclass: 2 Survived: 0 Count: 1
+Age: 2 Sex: 1 Pclass: 3 Survived: 1 Count: 1
+Age: 0 Sex: 1 Pclass: 2 Survived: 0 Count: 14
+
