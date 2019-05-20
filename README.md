@@ -37,7 +37,7 @@ make
 
 The binary is locate out side, run the binary with one argument as the csv file.
 ```
-./apriori titanic_train.csv
+./r
 ```
 
 To build with debug, `cmake .. -DCMAKE_BUILD_TYPE=DEBUG`, the output file is `apriori_debug`. To write code run in debug only, write code inside `#ifdef` gaurd.
